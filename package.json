@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "netlify dev",
-    "lint": "eslint .",
+    "lint:css": "stylelint --allow-empty-input **/*.css",
+    "lint:js": "eslint .",
+    "lint": "npm run lint:js && npm run lint:css",
     "test": "jest --passWithNoTests"
   },
   "author": "",
@@ -22,7 +24,10 @@
     "jest": "^26.2.2",
     "lint-staged": "^10.2.11",
     "netlify-cli": "^2.59.3",
-    "prettier": "2.0.5"
+    "prettier": "2.0.5",
+    "stylelint": "^13.6.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^20.0.0"
   },
   "husky": {
     "hooks": {
@@ -31,6 +36,7 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
-    "*.{js,md}": "prettier --write"
+    "*.css": "stylelint --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
