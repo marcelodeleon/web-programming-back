@@ -3,9 +3,10 @@ import { render } from 'https://unpkg.com/lit-html?module';
 import { isAuthenticated } from './utils/auth.js';
 import authenticatedApp from './authenticatedApp.js';
 import unauthenticatedApp from './unauthenticatedApp.js';
+import home from './templates/home.js';
 
 const renderApp = () => {
-  const app = isAuthenticated() ? authenticatedApp : unauthenticatedApp;
+  const app = isAuthenticated() ? authenticatedApp : home; //antes de home: unauthenticatedApp
   render(app(), document.body);
 };
 
