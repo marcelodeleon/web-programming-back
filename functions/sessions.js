@@ -1,40 +1,35 @@
 const jwt = require('jsonwebtoken');
 
+const { User } = require('../libs/models');
+const { mongodb } = require('../libs/connectors');
+
 const jwtSecret = process.env.JWT_SECRET;
+const mongodbUri = process.env.MONGODB_URI;
 
-// TODO: Move to real database.
-const users = [
-  {
-    id: '92938',
-    username: 'marcdele',
-    password: '123456',
-  },
-];
-
-exports.handler = (event, context, callback) => {
+exports.handler = async (event) => {
+  await mongodb(mongodbUri);
   const { body } = event;
 
   const { username, password } = JSON.parse(body);
 
-  const foundUser = users.find((user) => user.username === username);
+  const foundUser = await User.findOne({ username });
   if (!foundUser || foundUser.password !== password) {
-    callback(null, {
+    return {
       statusCode: 401,
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ error: 'Invalid username/password combination.' }),
-    });
-    return;
+    };
   }
 
   const token = jwt.sign({ sub: foundUser.id }, jwtSecret);
 
-  callback(null, {
+  return {
     statusCode: 200,
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ token }),
-  });
+  };
 };
