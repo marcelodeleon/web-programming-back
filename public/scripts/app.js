@@ -4,6 +4,7 @@ import { isAuthenticated } from './utils/auth.js';
 import authenticatedApp from './authenticatedApp.js';
 import unauthenticatedApp from './unauthenticatedApp.js';
 import home from './templates/home.js';
+import connections from './templates/connections.js'
 
 const renderApp = () => {
   const app = isAuthenticated() ? authenticatedApp : home; //antes de home: unauthenticatedApp
