@@ -1,6 +1,24 @@
 import { html } from 'https://unpkg.com/lit-html?module';
+import register from './register.js';
 
 const login = () => {
+
+  const loginHandler = async (event) => {
+    event.preventDefault();
+
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+
+    try {
+      console.log(username, password)
+      //await logIn(username, password);
+    } catch (err) {
+      // TODO: Render error.
+    }
+  };
+
+
+
   return html`
     <style>
       .pageContainer {
@@ -14,7 +32,7 @@ const login = () => {
       }
 
       .login-container {
-        background-color: rgb(65, 116, 116);
+        background-color: #a5a5a5;
         margin-top: 15%;
         align-self: auto;
         padding: 40px;
@@ -33,21 +51,24 @@ const login = () => {
       .login-container h5 {
         float: left;
       }
+
+      input {
+        border: none;
+      }
     </style>
     <div class="pageContainer">
-      <div class="login-container">
-        <input type="text" name="user" placeholder="Usuario" />
+      <form class="login-container" @submit=${loginHandler}>
+        <input type="text" name="username" placeholder="Usuario" />
         <br />
-        <input type="text" name="user" placeholder="Contrase&ntilde;a" />
+        <input type="password" name="password" placeholder="Contrase&ntilde;a" />
         <br />
-        <button>Ingresar</button>
+        <button type="submit">Ingresar</button>
         <br />
         <h5>
-          No tienes cuenta?
-          <a href="http://" target="_blank">Regístrate! </a> Olvidaste tu
-          contraseña? <a href="http://" target="_blank">Recuperar </a>
+          ¿No tienes cuenta? <a href="/register" target="_self">Regístrate!</a> 
+          ¿Olvidaste tu contraseña? <a href="/register" target="_self">Recuperar </a>
         </h5>
-      </div>
+      </form>
     </div>
   `;
 };
