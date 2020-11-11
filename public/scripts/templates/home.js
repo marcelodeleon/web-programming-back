@@ -3,60 +3,6 @@ import { html } from 'https://unpkg.com/lit-html?module';
 const home = () => {
   return html`
     <style>
-      body {
-        font-family: monospace;
-      }
-      #menu {
-        background: #446ff2;
-        color: #f2f2f2;
-        height: 45px;
-        padding-left: 18px;
-        border-radius: 10px;
-      }
-      #menu ul,
-      #menu li {
-        margin: 0 auto;
-        padding: 0;
-        list-style: none;
-      }
-      #menu ul {
-        width: 100%;
-      }
-      #menu li {
-        float: right;
-        display: inline;
-        position: relative;
-      }
-      #menu a {
-        display: block;
-        line-height: 45px;
-        padding: 0 14px;
-        text-decoration: none;
-        color: #f2f2f2;
-        font-size: 16px;
-      }
-
-      #menu li a:hover {
-        color: #446ff2;
-        background: #f2f2f2;
-      }
-      #menu input {
-        display: none;
-        margin: 0;
-        padding: 0;
-        height: 45px;
-        width: 100%;
-        opacity: 0;
-        cursor: pointer;
-      }
-      #menu label {
-        display: none;
-        line-height: 45px;
-        text-align: center;
-        position: absolute;
-        left: 35px;
-      }
-
       .container {
         display: flex;
         flex-direction: row;
@@ -192,7 +138,3 @@ const home = () => {
   `;
 };
 export default home;
-
-/* const home = () => {
-    
-} */
