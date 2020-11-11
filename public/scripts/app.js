@@ -5,7 +5,7 @@ import authenticatedApp from './authenticatedApp.js';
 import unauthenticatedApp from './unauthenticatedApp.js';
 
 const renderApp = () => {
-  const app = isAuthenticated() ? authenticatedApp : unauthenticatedApp;
+  const app = isAuthenticated() ? authenticatedApp : authenticatedApp;
   render(app(), document.body);
 };
 
