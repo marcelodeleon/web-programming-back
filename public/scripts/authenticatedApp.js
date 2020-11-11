@@ -5,7 +5,7 @@ import home from './templates/home.js';
 import navbar from './templates/navbar.js';
 
 const routes = {
-  '/': home,
+  '/': home
 };
 
 const authenticatedApp = () => html` ${navbar()} ${router(routes)} `;
