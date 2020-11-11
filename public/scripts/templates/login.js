@@ -3,23 +3,6 @@ import { html } from 'https://unpkg.com/lit-html?module';
 const login = () => {
   return html`
     <style>
-      /* Color Theme Swatches in Hex */
-      .Attune---creative-agency-1-hex {
-        color: #446ff2;
-      }
-      .Attune---creative-agency-2-hex {
-        color: #527af2;
-      }
-      .Attune---creative-agency-3-hex {
-        color: #5c8ef2;
-      }
-      .Attune---creative-agency-4-hex {
-        color: #bf9663;
-      }
-      .Attune---creative-agency-5-hex {
-        color: #f2f2f2;
-      }
-
       .pageContainer {
         text-align: center;
         display: flex;
@@ -60,7 +43,7 @@ const login = () => {
         <button>Ingresar</button>
         <br />
         <h5>
-          No tienen cuenta?
+          No tienes cuenta?
           <a href="http://" target="_blank">Regístrate! </a> Olvidaste tu
           contraseña? <a href="http://" target="_blank">Recuperar </a>
         </h5>
