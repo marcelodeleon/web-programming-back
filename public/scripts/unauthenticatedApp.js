@@ -1,11 +1,10 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
-import loginForm from './templates/loginForm.js';
+import login from './templates/login.js';
 
 const unauthenticatedApp = () => html`
- 
   <h1>Log in to <strong>WPJ</strong></h1>
-  ${loginForm()}
+  ${login()}
 `;
 
 export default unauthenticatedApp;
