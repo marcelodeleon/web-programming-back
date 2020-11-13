@@ -69,6 +69,7 @@ const product = () => {
         font-size: medium;
       }
 
+
       .connTittle {
         margin-left: 10px;
       }
