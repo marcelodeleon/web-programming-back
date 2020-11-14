@@ -7,9 +7,8 @@ import navbarItem from './navbarItem.js'
 const navbar = () => {
   const navStyles = {
     background: '#446ff2',
-    color: '#f2f2f2',
+    color: '#0095eb',
     'padding-left': '18px',
-    'border-radius': '10px',
   }
 
   const unorderdListStyles = {
