@@ -3,6 +3,7 @@ import { styleMap } from 'https://unpkg.com/lit-html/directives/style-map?module
 import { logOut } from '../services/auth.js';
 import navbarItem from './navbarItem.js'
 
+
 const navbar = () => {
   const navStyles = {
     background: '#446ff2',
@@ -22,8 +23,8 @@ const navbar = () => {
 
   const navbarItems = [
     { path: '#', label: 'Log Out', onClick: logOut },
-    { path: '#', label: 'Perfil' },
-    { path: '/product', label: 'Producto' },
+    { path: '/profile', label: 'Perfil' },
+    { path: '/products', label: 'Producto' },
     { path: '/connections', label: 'Conexiones' },
     { path: '/', label: 'Explorar' },
   ]
@@ -36,5 +37,6 @@ const navbar = () => {
     </nav>
   `;
 };
+
 
 export default navbar;

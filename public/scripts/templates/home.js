@@ -1,6 +1,18 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
 const home = () => {
+  let showOfferDiv = 'block';
+
+  function viewOfferHandler() {
+    // Cambia la propiedad pero no actualiza el DOM
+    console.log(showOfferDiv);
+    if (showOfferDiv === 'block') {
+      showOfferDiv = 'none';
+    } else {
+      showOfferDiv = 'block';
+    }
+  }
+
   return html`
     <style>
       .container {
@@ -34,6 +46,7 @@ const home = () => {
       .tittle {
         font-weight: bold;
         text-align: center;
+        font-size: 3vh;
       }
 
       .image {
@@ -68,7 +81,7 @@ const home = () => {
         font-size: medium;
       }
       .myProducts_container {
-        display: block;
+        display: ${showOfferDiv};
         background-color: darkgray;
         padding: 10px;
         border-radius: 5px;
@@ -106,8 +119,12 @@ const home = () => {
         </div>
 
         <div class="buttons_container">
-          <button class="btn connect" type="button" formtarget="_self">
-            Cambiar por...
+          <button
+            class="btn connect"
+            type="button"
+            @click="${viewOfferHandler}"
+          >
+            Ofertar
           </button>
           <button class="btn reject" type="button" formtarget="_self">
             Descartar

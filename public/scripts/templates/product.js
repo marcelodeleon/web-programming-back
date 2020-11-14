@@ -69,22 +69,6 @@ const product = () => {
         font-size: medium;
       }
 
-      /* Color Theme Swatches in Hex */
-      .Attune---creative-agency-1-hex {
-        color: #446ff2;
-      }
-      .Attune---creative-agency-2-hex {
-        color: #527af2;
-      }
-      .Attune---creative-agency-3-hex {
-        color: #5c8ef2;
-      }
-      .Attune---creative-agency-4-hex {
-        color: #bf9663;
-      }
-      .Attune---creative-agency-5-hex {
-        color: #f2f2f2;
-      }
 
       .connTittle {
         margin-left: 10px;

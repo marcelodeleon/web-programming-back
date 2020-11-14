@@ -23,5 +23,5 @@ export const logIn = async (username, password) => {
 export const logOut = () => {
   removeSessionToken();
 
-  navigate('/login');
+  navigate('/');
 };
