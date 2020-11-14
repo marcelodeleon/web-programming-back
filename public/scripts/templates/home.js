@@ -1,17 +1,32 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
 const home = () => {
-  let showOfferDiv = 'block';
+  var photosCounter = 0;
 
-  function viewOfferHandler() {
-    // Cambia la propiedad pero no actualiza el DOM
-    console.log(showOfferDiv);
-    if (showOfferDiv === 'block') {
-      showOfferDiv = 'none';
-    } else {
-      showOfferDiv = 'block';
-    }
+  var myProducts = ["Lote de libros", "Silla de escritorio", "Bicicleta R20"]
+
+  //Objetc for testing
+  var objProduct = new Object();
+  objProduct.name = "Guitarra Criolla Fender!";
+  objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
+  objProduct.descrption = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
+
+  function handlerOffer() {
+    console.log("Realizar Offerta");
   }
+
+  function handlerDiscard() {
+    console.log("Descartar producto, cargar siguiente");
+  }
+
+  //Los handler cambian el contador, pero no se renderiza la nueva foto :/
+  function handlerPreviusPhoto() {
+    objProduct.photos[photosCounter-1] ? photosCounter-- : console.log("Estás en la primera foto")
+  }
+  function handlerNextPhoto() {
+    objProduct.photos[photosCounter+1] ? photosCounter++ : console.log("No hay más fotos")
+  }
+  
 
   return html`
     <style>
@@ -60,7 +75,7 @@ const home = () => {
         width: 400px;
         height: auto;
         padding: 15px;
-        background-color: #bf9663;
+        background-color: #a5a5a5;
       }
       .buttons_container {
         display: flex;
@@ -81,75 +96,74 @@ const home = () => {
         font-size: medium;
       }
       .myProducts_container {
-        display: ${showOfferDiv};
-        background-color: darkgray;
+        margin: 15px;
         padding: 10px;
-        border-radius: 5px;
+        border-style: solid; 
+        border-color: #bc5242;
       }
       .btnOffer {
         margin-top: 10px;
+      }
+
+      .photosCounter {
+        text-align: center;
       }
     </style>
 
     <div class="container">
       <div class="left_container">
-        <button class="arrow" type="button" formtarget="_self">&#x3C;</button>
+        <button class="arrow" type="button" @click="${handlerPreviusPhoto}">&#x3C;</button>
       </div>
 
       <div class="center_container">
         <div class="tittle">
-          <p>Guitarra criolla Fender! Poco uso</p>
+          <p>${objProduct.name}</p>
         </div>
 
         <img
           class="image"
-          src="https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg"
+          src=${objProduct.photos[photosCounter]}
           alt="product"
           height="400"
           width="400"
         />
-
+        <p class="photosCounter">Foto: ${photosCounter + 1}/${objProduct.photos.length}</p>
         <div class="description">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
-        </div>
-
-        <div class="buttons_container">
-          <button
-            class="btn connect"
-            type="button"
-            @click="${viewOfferHandler}"
-          >
-            Ofertar
-          </button>
-          <button class="btn reject" type="button" formtarget="_self">
-            Descartar
-          </button>
+          <p>${objProduct.descrption}</p>
         </div>
 
         <div class="myProducts_container">
           <p>Elige cuál producto deseas ofrecer a cambio</p>
+          <select name="objProduct">
+            ${
+              myProducts.map((p) => {//No funciona como debería
+                '<option value="p">p de arriba</option>'
+              })
 
-          <select name="myProduct">
-            <option>Bicicleta R20 como nueva</option>
-
-            <option>Lote de libros</option>
-
-            <option selected>Silla de escritorio</option>
+            }      
           </select>
           <br />
-          <button class="btnOffer" type="button" formtarget="_self">
-            Realizar oferta!
+
+        </div>
+
+        <div class="buttons_container">
+          <button
+            class="btn offer"
+            type="button"
+            @click="${handlerOffer}"
+          >
+            Ofertar
+          </button>
+          <button class="btn reject" type="button" @click="${handlerDiscard}">
+            Descartar
           </button>
         </div>
+
+        
       </div>
 
       <div class="right_container">
-        <button class="arrow" type="button" formtarget="_self">&#x3E;</button>
+        <button class="arrow" type="button" @click="${handlerNextPhoto}">&#x3E;</button>
       </div>
     </div>
   `;

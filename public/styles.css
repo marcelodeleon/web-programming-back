@@ -1,3 +1,17 @@
 /* TODO: Remove dummy styles with applications global styles */
 body {
+  margin: 0;
+  margin-bottom: 20px;
+  font-family: monospace;
+  background: #dedede;
+}
+
+button {
+  display: block;
+  background-color: #0095eb;
+  padding: 10px;
+  border: 0;
+  font-size: 1em;
+  color: white;
+  font-family: 'Roboto', sans-serif;
 }
