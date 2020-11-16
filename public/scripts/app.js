@@ -5,7 +5,6 @@ import authenticatedApp from './authenticatedApp.js';
 import unauthenticatedApp from './unauthenticatedApp.js';
 
 const renderApp = () => {
-
   const app = isAuthenticated() ? authenticatedApp : unauthenticatedApp;
   // const app = authenticatedApp; //uncomment to skip authentication
 

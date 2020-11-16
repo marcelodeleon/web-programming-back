@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.5"
   },
@@ -24,6 +25,8 @@
     "husky": "^4.2.5",
     "jest": "^26.2.2",
     "lint-staged": "^10.2.11",
+    "jest-environment-node": "^26.3.0",
+    "mongodb-memory-server": "^6.8.0",
     "netlify-cli": "^2.59.3",
     "prettier": "2.0.5",
     "stylelint": "^13.6.1",
