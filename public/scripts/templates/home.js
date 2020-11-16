@@ -1,12 +1,12 @@
 import { html } from 'https://unpkg.com/lit-html?module';
-
+let photosCounter = 0;
 const home = () => {
-  var photosCounter = 0;
+  
 
-  var myProducts = ["Lote de libros", "Silla de escritorio", "Bicicleta R20"]
+  let myProducts = ["Lote de libros", "Silla de escritorio", "Bicicleta R20"]
 
   //Objetc for testing
-  var objProduct = new Object();
+  let objProduct = new Object();
   objProduct.name = "Guitarra Criolla Fender!";
   objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
   objProduct.descrption = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
@@ -20,11 +20,15 @@ const home = () => {
   }
 
   //Los handler cambian el contador, pero no se renderiza la nueva foto :/
+
   function handlerPreviusPhoto() {
-    objProduct.photos[photosCounter-1] ? photosCounter-- : console.log("Estás en la primera foto")
+    objProduct.photos[photosCounter-1] && photosCounter-- ;
+    window.dispatchEvent(new CustomEvent("foo"));
   }
   function handlerNextPhoto() {
-    objProduct.photos[photosCounter+1] ? photosCounter++ : console.log("No hay más fotos")
+    objProduct.photos[photosCounter+1] && photosCounter++ ;
+    console.log(photosCounter)
+    window.dispatchEvent(new CustomEvent("foo"));
   }
   
 
@@ -135,12 +139,9 @@ const home = () => {
         <div class="myProducts_container">
           <p>Elige cuál producto deseas ofrecer a cambio</p>
           <select name="objProduct">
-            ${
-              myProducts.map((p) => {//No funciona como debería
-                '<option value="p">p de arriba</option>'
-              })
-
-            }      
+            ${myProducts.map((p) => 
+              html`<option value="p">${p}</option>`
+            )}      
           </select>
           <br />
 

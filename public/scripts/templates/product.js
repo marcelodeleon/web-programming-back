@@ -1,6 +1,19 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
 const product = () => {
+
+    //Objetc for testing
+    var objProduct = new Object();
+    objProduct.name = "Guitarra Criolla Fender!";
+    objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
+    objProduct.descrption = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
+  
+    var myProducts = [objProduct, objProduct, objProduct]
+
+    function handlerOffer() {
+      console.log("Realizar Offerta");
+    }
+
   return html`
     <style>
       .container {
@@ -132,94 +145,36 @@ const product = () => {
         margin-top: 10px;
       }
     </style>
-
     <div class="prodsContainer">
       <h1 class="prodTittle">Tus Productos:</h1>
+    ${myProducts.map(mp =>
+      html`
+      
       <div class="prodContainer">
-        <h3>Nombre: Bicicleta para niño R20</h3>
+        <h3>Nombre: ${mp.name}</h3>
         <h3>Descripción:</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-          aliquam? Quidem ipsa quos molestiae aliquid error, q uisquam similique
-          dicta optio sint at veritatis nostrum maiores maxime distinctio minus
-          itaque accusantium!
-        </p>
+        <p>${mp.descrption}</p>
         <h3>Fotos:</h3>
 
         <div class="prod-photo-container">
-          <img
-            class="prod-photo"
-            src="https://http2.mlstatic.com/D_NQ_NP_968037-MLU32984346427_112019-O.webp"
-            alt="product photo"
-            width="180"
-            height="180"
-          />
-
-          <img
-            class="prod-photo"
-            src="https://http2.mlstatic.com/D_NQ_NP_672960-MLU32984354079_112019-O.webp"
-            alt="product photo"
-            width="180"
-            height="180"
-          />
-
-          <img
-            class="prod-photo"
-            src="https://http2.mlstatic.com/D_NQ_NP_846274-MLU32984354075_112019-O.webp"
-            alt="product photo"
-            width="180"
-            height="180"
-          />
+          ${mp.photos.map(p => 
+            html`<img
+              class="prod-photo"
+              src= ${p}
+              alt="product photo"
+              width="180"
+              height="180"
+            />`
+          )}          
 
           <button class="btn-add">+ Agregar foto...</button>
         </div>
 
         <button class="btn-prod-edit">Editar Producto</button>
       </div>
+      `)}
 
-      <div class="prodContainer">
-        <h3>Nombre: Lampara estilo antiguo</h3>
-        <h3>Descripción:</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-          aliquam? Quidem ipsa quos molestiae aliquid error, q uisquam similique
-          dicta optio sint at veritatis nostrum maiores maxime distinctio minus
-          itaque accusantium!
-        </p>
-        <h3>Fotos:</h3>
-
-        <div class="prod-photo-container">
-          <img
-            class="prod-photo"
-            src="https://http2.mlstatic.com/D_NQ_NP_633027-MLU40495134745_012020-O.webp"
-            alt="product photo"
-            width="180"
-            height="180"
-          />
-
-          <img
-            class="prod-photo"
-            src="https://http2.mlstatic.com/D_NQ_NP_670203-MLU40495163088_012020-O.webp"
-            alt="product photo"
-            width="180"
-            height="180"
-          />
-
-          <img
-            class="prod-photo"
-            src="https://http2.mlstatic.com/D_NQ_NP_688882-MLU40495160098_012020-O.webp"
-            alt="product photo"
-            width="180"
-            height="180"
-          />
-
-          <button class="btn-add">+ Agregar foto...</button>
-        </div>
-
-        <button class="btn-prod-edit">Editar Producto</button>
-      </div>
-
-      <button class="">Agregar Nuevo Producto</button>
+    <button class="">Agregar Nuevo Producto</button>
     </div>
   `;
 };

@@ -1,6 +1,25 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
 const connections = () => {
+
+  //Objetc for testing
+  var objProduct = new Object();
+  objProduct.name = "Guitarra Criolla Fender!";
+  objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
+  objProduct.descrption = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
+
+  var objPerson = new Object();
+  objPerson.name = "Oscar Lopez";
+  objPerson.phone = "098 654 445";
+  objPerson.email = "oscarlopez45@gmail.com";
+
+  var myconnections = [[objProduct, objPerson], [objProduct, objPerson]]
+
+  function handlerOffer() {
+    console.log("Realizar Offerta");
+  }
+
+
   return html`
     <style>
       .container {
@@ -10,6 +29,7 @@ const connections = () => {
         justify-content: center;
         align-content: flex-start;
         align-items: stretch;
+        
       }
 
       .left_container {
@@ -77,7 +97,7 @@ const connections = () => {
         padding: 10px;
         text-align: left;
 
-        background-color: #527af2;
+        background-color: rgb(28, 141, 179);
         height: 800px;
         border-radius: 10px;
       }
@@ -101,49 +121,29 @@ const connections = () => {
     </style>
     <h1 class="connTittle">Tus conexiones:</h1>
     <div class="connContainer">
+
+    ${myconnections.map(p => 
+      html`
       <div class="connection">
-        <h2 class="connProdTittle">Bicicleta GT R26 - Poco uso</h2>
+      <h2 class="connProdTittle">${objProduct.name}</h2>
 
-        <img
-          class="connProdPhoto"
-          src="https://farm6.staticflickr.com/5104/5608004353_3fc49c27d2_b.jpg"
-          alt="product photo"
-          width="175"
-          height="175"
-          align="right"
-        />
+      <img
+        class="connProdPhoto"
+        src="${objProduct.photos[0]}"
+        alt="product photo"
+        width="175"
+        height="175"
+        align="right"
+      />
 
-        <p class="connProdDescription">
-          Muy poco uso y funcionando en perfecto estado.
-        </p>
+      <p class="connProdDescription">${objProduct.descrption}</p>
 
-        <h2 class="connProdTittle">Propietario: Oscar Lopez</h2>
-        <p>091 686 889</p>
-        <p>oscarelLopez@gmail.com</p>
-      </div>
-      <div class="connection">
-        <h2 class="connProdTittle">Bicicleta GT R26 - Poco uso</h2>
-
-        <img
-          class="connProdPhoto"
-          src="https://farm6.staticflickr.com/5104/5608004353_3fc49c27d2_b.jpg"
-          alt="product photo"
-          width="175"
-          height="175"
-          align="right"
-        />
-
-        <p class="connProdDescription">
-          Muy poco uso y funciddddddddddddddddddddddddddddddddddddd
-          ddddddddddddddddddd dddddddddddddddddddddddddddddddd
-          dddddddddddddddddddddddddddddddddonando en descripcion
-          largaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaa aaaaaaa perfecto estado.
-        </p>
-
-        <h2 class="connProdTittle">Propietario: Oscar Lopez</h2>
-        <p>091 686 889</p>
-        <p>oscarelLopez@gmail.com</p>
-      </div>
+      <h2 class="connProdTittle">Propietario: ${objPerson.name}</h2>
+      <p>${objPerson.phone}</p>
+      <p>${objPerson.email}</p>
+    </div>
+      `
+      )}
     </div>
   `;
 };
