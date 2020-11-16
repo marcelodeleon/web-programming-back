@@ -1,6 +1,22 @@
 import { html } from 'https://unpkg.com/lit-html?module';
+import { register } from '../services/users.js';
 
-const register = () => {
+const registerUser = () => {
+  const submitHandler = async (event) => {
+    event.preventDefault();
+
+    const firstName = event.target.name.value;
+    const lastName = event.target.lastName.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    try {
+      await register({ firstName, lastName, email, password });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return html`
     <style>
       body {
@@ -51,9 +67,9 @@ const register = () => {
 
     <div class="container-register">
       <h2>¡&Uacute;nete y empieza a intercambiar productos!</h2>
-      <form method="post">
+      <form @submit=${submitHandler}>
         <input
-          name="nombre"
+          name="name"
           type="text"
           placeholder="Nombre"
           maxlength="30"
@@ -61,7 +77,7 @@ const register = () => {
           autofocus
         />
         <input
-          name="apellido"
+          name="lastName"
           type="text"
           placeholder="Apellido"
           maxlength="30"
@@ -75,7 +91,7 @@ const register = () => {
           required
         />
         <input
-          name="contraseña"
+          name="password"
           type="password"
           placeholder="Contraseña"
           maxlength="30"
@@ -103,4 +119,4 @@ const register = () => {
     </div>
   `;
 };
-export default register;
+export default registerUser;

@@ -1,19 +1,12 @@
 const jwt = require('jsonwebtoken');
 
-const { User } = require('../libs/models');
-const { mongodb } = require('../libs/connectors');
+const { User } = require('../../../libs/models');
 
 const jwtSecret = process.env.JWT_SECRET;
-const mongodbUri = process.env.MONGODB_URI;
 
-exports.handler = async (event) => {
-  await mongodb(mongodbUri);
-  const { body } = event;
-
-  const { username, password } = JSON.parse(body);
-
+const create = async (username, password) => {
   const foundUser = await User.findOne({ username });
-  if (!foundUser || foundUser.password !== password) {
+  if (!foundUser || !(await foundUser.comparePassword(password))) {
     return {
       statusCode: 401,
       headers: {
@@ -33,3 +26,5 @@ exports.handler = async (event) => {
     body: JSON.stringify({ token }),
   };
 };
+
+module.exports = create;
