@@ -12,6 +12,10 @@ const renderApp = () => {
   render(app(), document.body);
 };
 
+
+
 window.addEventListener('nav', renderApp);
+
+window.addEventListener('foo', renderApp);
 
 renderApp();
