@@ -6,15 +6,13 @@ import unauthenticatedApp from './unauthenticatedApp.js';
 
 const renderApp = () => {
   const app = isAuthenticated() ? authenticatedApp : unauthenticatedApp;
-  //const app = authenticatedApp; //uncomment to skip authentication
+  // const app = authenticatedApp; //uncomment to skip authentication
 
   render(app(), document.body);
 };
 
-
-
 window.addEventListener('nav', renderApp);
 
-window.addEventListener('foo', renderApp);
+window.addEventListener('refresh', renderApp);
 
 renderApp();

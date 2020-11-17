@@ -1,8 +1,13 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 import { register } from '../services/users.js';
+import refresh from '../utils/refresh.js';
+
+let loading = false;
 
 const registerUser = () => {
   const submitHandler = async (event) => {
+    loading = true;
+    refresh();
     event.preventDefault();
 
     const firstName = event.target.name.value;
@@ -13,7 +18,10 @@ const registerUser = () => {
     try {
       await register({ firstName, lastName, email, password });
     } catch (error) {
-      console.error(error);
+      alert(error.message);
+    } finally {
+      loading = false;
+      refresh();
     }
   };
 
@@ -114,7 +122,9 @@ const registerUser = () => {
           maxlength="30"
           autofocus
         />
-        <button id="enviar" name="enviar" type="submit">Registrarme</button>
+        <button id="enviar" name="enviar" type="submit">
+          ${loading ? 'Loading...' : 'Registrarme'}
+        </button>
       </form>
     </div>
   `;

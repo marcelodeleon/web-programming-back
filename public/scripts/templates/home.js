@@ -1,36 +1,42 @@
 import { html } from 'https://unpkg.com/lit-html?module';
+import refresh from '../utils/refresh.js';
+
 let photosCounter = 0;
 const home = () => {
-  
+  const myProducts = ['Lote de libros', 'Silla de escritorio', 'Bicicleta R20'];
 
-  let myProducts = ["Lote de libros", "Silla de escritorio", "Bicicleta R20"]
-
-  //Objetc for testing
-  let objProduct = new Object();
-  objProduct.name = "Guitarra Criolla Fender!";
-  objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
-  objProduct.descrption = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
+  // Objetc for testing
+  const objProduct = {};
+  objProduct.name = 'Guitarra Criolla Fender!';
+  objProduct.photos = [
+    'https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg',
+    'https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg',
+  ];
+  objProduct.descrption =
+    'Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.';
 
   function handlerOffer() {
-    console.log("Realizar Offerta");
+    console.log('Realizar Offerta');
   }
 
   function handlerDiscard() {
-    console.log("Descartar producto, cargar siguiente");
+    console.log('Descartar producto, cargar siguiente');
   }
 
-  //Los handler cambian el contador, pero no se renderiza la nueva foto :/
+  // Los handler cambian el contador, pero no se renderiza la nueva foto :/
 
   function handlerPreviusPhoto() {
-    objProduct.photos[photosCounter-1] && photosCounter-- ;
-    window.dispatchEvent(new CustomEvent("foo"));
+    if (objProduct.photos[photosCounter - 1]) {
+      photosCounter -= 1;
+      refresh();
+    }
   }
   function handlerNextPhoto() {
-    objProduct.photos[photosCounter+1] && photosCounter++ ;
-    console.log(photosCounter)
-    window.dispatchEvent(new CustomEvent("foo"));
+    if (objProduct.photos[photosCounter + 1]) {
+      photosCounter += 1;
+      refresh();
+    }
   }
-  
 
   return html`
     <style>
@@ -102,7 +108,7 @@ const home = () => {
       .myProducts_container {
         margin: 15px;
         padding: 10px;
-        border-style: solid; 
+        border-style: solid;
         border-color: #bc5242;
       }
       .btnOffer {
@@ -116,7 +122,9 @@ const home = () => {
 
     <div class="container">
       <div class="left_container">
-        <button class="arrow" type="button" @click="${handlerPreviusPhoto}">&#x3C;</button>
+        <button class="arrow" type="button" @click="${handlerPreviusPhoto}">
+          &#x3C;
+        </button>
       </div>
 
       <div class="center_container">
@@ -131,7 +139,9 @@ const home = () => {
           height="400"
           width="400"
         />
-        <p class="photosCounter">Foto: ${photosCounter + 1}/${objProduct.photos.length}</p>
+        <p class="photosCounter">
+          Foto: ${photosCounter + 1}/${objProduct.photos.length}
+        </p>
         <div class="description">
           <p>${objProduct.descrption}</p>
         </div>
@@ -139,32 +149,25 @@ const home = () => {
         <div class="myProducts_container">
           <p>Elige cuál producto deseas ofrecer a cambio</p>
           <select name="objProduct">
-            ${myProducts.map((p) => 
-              html`<option value="p">${p}</option>`
-            )}      
+            ${myProducts.map((p) => html`<option value="p">${p}</option>`)}
           </select>
           <br />
-
         </div>
 
         <div class="buttons_container">
-          <button
-            class="btn offer"
-            type="button"
-            @click="${handlerOffer}"
-          >
+          <button class="btn offer" type="button" @click="${handlerOffer}">
             Ofertar
           </button>
           <button class="btn reject" type="button" @click="${handlerDiscard}">
             Descartar
           </button>
         </div>
-
-        
       </div>
 
       <div class="right_container">
-        <button class="arrow" type="button" @click="${handlerNextPhoto}">&#x3E;</button>
+        <button class="arrow" type="button" @click="${handlerNextPhoto}">
+          &#x3E;
+        </button>
       </div>
     </div>
   `;
