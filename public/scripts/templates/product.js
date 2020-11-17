@@ -1,118 +1,42 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
+import { addProduct } from '../services/products.js'
+
+let showForm = "none";
 const product = () => {
+  
 
     //Objetc for testing
     var objProduct = new Object();
     objProduct.name = "Guitarra Criolla Fender!";
     objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
-    objProduct.descrption = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
+    objProduct.description = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
   
-    var myProducts = [objProduct, objProduct, objProduct]
+    var myProducts = [objProduct]
 
-    function handlerOffer() {
-      console.log("Realizar Offerta");
+    function handlerShowForm() {
+      showForm == "none" ? showForm = "block" : showForm = "none"; 
+      window.dispatchEvent(new CustomEvent("foo"));
     }
+
+    const handlerNewProduct = async (event) => {
+      event.preventDefault();
+  
+      const name = event.target.name.value;
+      const description = event.target.description.value;
+      const photos = [event.target.f1.value, event.target.f2.value, event.target.f3.value]
+      
+      try {
+        await addProduct({name, description, photos});
+      } catch (err) {
+        console.log(err);
+      }
+      handlerShowForm()
+           
+    };
 
   return html`
     <style>
-      .container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-content: flex-start;
-        align-items: stretch;
-      }
-
-      .left_container {
-        order: 0;
-        flex: 0 1 auto;
-        align-self: center;
-      }
-
-      .right_container {
-        order: 0;
-        flex: 0 1 auto;
-        align-self: center;
-      }
-
-      .arrow {
-        height: 40px;
-        width: 40px;
-        font-weight: bold;
-        font-size: medium;
-      }
-
-      .tittle {
-        font-weight: bold;
-        text-align: center;
-      }
-
-      .image {
-        margin: 15px;
-        margin-top: 0px;
-        border-radius: 5%;
-      }
-
-      .description {
-        border-radius: 3%;
-        width: 400px;
-        height: auto;
-        padding: 15px;
-        background-color: #bf9663;
-      }
-
-      .buttons_container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-content: center;
-        align-items: stretch;
-      }
-
-      .btn {
-        margin: 15px;
-        margin-left: 40px;
-        margin-right: 40px;
-        height: 50px;
-        width: 130px;
-        font-weight: bold;
-        font-size: medium;
-      }
-
-
-      .connTittle {
-        margin-left: 10px;
-      }
-
-      .connContainer {
-        padding: 10px;
-        text-align: left;
-
-        background-color: #527af2;
-        height: 800px;
-        border-radius: 10px;
-      }
-
-      .connProdPhoto {
-        border-radius: 10px;
-
-        margin: 10px;
-      }
-
-      .connProdTittle {
-        font-weight: bold;
-      }
-
-      .connection {
-        border-style: inset;
-        margin: 10px;
-        padding: 10px;
-        height: 260px;
-      }
-
       .prodsContainer {
         margin: 10px;
       }
@@ -144,37 +68,84 @@ const product = () => {
       .btn-prod-edit {
         margin-top: 10px;
       }
+
+      .container-newProduct {
+        margin-top: 15vh;
+        margin-left: 30%;
+        margin-botom: 5vh;
+        width: 40%;
+        height: 70vh;
+        background: #a5a5a5;
+        border-radius: 2%;
+        padding: 15px;
+        position: fixed;
+        display: ${showForm};
+      }
+      form input,
+      form textarea {
+        margin-bottom: 15px;
+        width: 100%;
+        padding: 10px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border: none;
+        color: #525c66;
+        font-size: 1em;
+        resize: horizontal;
+      }
+
+      .btn-enviar { float: left;}
+      .btn-cerrar {float: right;}
     </style>
+
+    <div class="container-newProduct">
+      <h2>¿Qué tienes para intercambiar?</h2>
+      <form @submit=${handlerNewProduct}>
+        <input name="name" type="text" placeholder="Nombre del producto" maxlength="30" required />
+        </br>
+        Descripción:
+        <textarea name="description" placeholder="Cuéntanos un poco..." cols="40" rows="6" required></textarea>
+        </br>
+        Fotos:
+        <input name="f1" type="text" placeholder="URL foto 1" maxlength="50" />
+        <input name="f2" type="text" placeholder="URL foto 2" maxlength="50" />
+        <input name="f3" type="text" placeholder="URL foto 3" maxlength="50" />
+        <button class="btn-enviar" name="guardar" type="submit">Guardar</button>
+        <button class="btn-cerrar" name="cerrar" @click="${handlerShowForm}">Cerrar</button>
+      </form>
+    </div>
+
+
     <div class="prodsContainer">
       <h1 class="prodTittle">Tus Productos:</h1>
-    ${myProducts.map(mp =>
-      html`
-      
-      <div class="prodContainer">
-        <h3>Nombre: ${mp.name}</h3>
-        <h3>Descripción:</h3>
-        <p>${mp.descrption}</p>
-        <h3>Fotos:</h3>
 
-        <div class="prod-photo-container">
-          ${mp.photos.map(p => 
-            html`<img
-              class="prod-photo"
-              src= ${p}
-              alt="product photo"
-              width="180"
-              height="180"
-            />`
-          )}          
+      ${myProducts.map(mp =>
+        html`      
+          <div class="prodContainer">
+            <h3>Nombre: ${mp.name}</h3>
+            <h3>Descripción:</h3>
+            <p>${mp.description}</p>
+            <h3>Fotos:</h3>
 
-          <button class="btn-add">+ Agregar foto...</button>
-        </div>
+            <div class="prod-photo-container">
+              ${mp.photos.map(p => 
+                html`<img
+                  class="prod-photo"
+                  src= ${p}
+                  alt="product photo"
+                  width="180"
+                  height="180"
+                />`
+              )}          
 
-        <button class="btn-prod-edit">Editar Producto</button>
-      </div>
-      `)}
+              <button class="btn-add" disabled>+ Agregar foto...</button>
+            </div>
 
-    <button class="">Agregar Nuevo Producto</button>
+            <button class="btn-prod-edit" disabled>Editar Producto</button>
+          </div>
+          `)}
+
+      <button class="" @click="${handlerShowForm}">Agregar Nuevo Producto</button>
     </div>
   `;
 };

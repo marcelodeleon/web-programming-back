@@ -5,6 +5,8 @@ import router from './templates/router.js';
 import register from './templates/register.js'
 
 const routes = {
+  
+  '/login': login,
   '/': login,
   '/register': register
 };

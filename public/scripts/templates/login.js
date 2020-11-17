@@ -1,5 +1,8 @@
 import { html } from 'https://unpkg.com/lit-html?module';
-import register from './register.js';
+
+import { logIn } from '../services/auth.js';
+
+
 
 const login = () => {
 
@@ -10,14 +13,11 @@ const login = () => {
     const password = event.target.password.value;
 
     try {
-      console.log(username, password)
-      //await logIn(username, password);
+      await logIn(username, password);
     } catch (err) {
-      // TODO: Render error.
+      console.log("err");
     }
   };
-
-
 
   return html`
     <style>
@@ -43,6 +43,7 @@ const login = () => {
         margin: 5px;
         height: 30px;
         width: 300px;
+        border: none;
       }
 
       .login-container button {
@@ -52,9 +53,6 @@ const login = () => {
         float: left;
       }
 
-      input {
-        border: none;
-      }
     </style>
     <div class="pageContainer">
       <form class="login-container" @submit=${loginHandler}>
@@ -66,7 +64,7 @@ const login = () => {
         <br />
         <h5>
           ¿No tienes cuenta? <a href="/register" target="_self">Regístrate!</a> 
-          ¿Olvidaste tu contraseña? <a href="/register" target="_self">Recuperar </a>
+      
         </h5>
       </form>
     </div>
