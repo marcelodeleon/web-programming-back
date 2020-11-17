@@ -1,14 +1,10 @@
 const { register } = require('./methods');
-const { mongodb } = require('../../libs/connectors');
-// const { db } = require('../../libs/middleware');
+const { authentication } = require('../../libs/middleware');
+const { db } = require('../../libs/middleware');
 
-const mongodbUri = process.env.MONGODB_URI;
-
-exports.handler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false; // eslint-disable-line no-param-reassign
+const usersHandler = async (event) => {
   const { httpMethod: method } = event;
 
-  await mongodb(mongodbUri);
   if (method === 'POST') {
     const userData = JSON.parse(event.body);
     return register(userData);
@@ -19,4 +15,7 @@ exports.handler = async (event, context) => {
   };
 };
 
-// exports.handler = usersHandler;
+const options = {
+  unauthenticatedRoutes: [{ method: 'GET', path: '/api/users' }],
+};
+exports.handler = db(authentication(options)(usersHandler));
