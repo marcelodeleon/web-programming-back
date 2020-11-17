@@ -15,6 +15,7 @@ const loginForm = () => {
       await logIn(username, password);
     } catch (err) {
       // TODO: Render error.
+      console.log(err);
     }
   };
 

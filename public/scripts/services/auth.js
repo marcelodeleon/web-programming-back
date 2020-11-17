@@ -7,6 +7,7 @@ export const logIn = async (username, password) => {
     username,
     password,
   });
+  
   if (error) {
     if (error.status === 401) {
       throw new Error('Invalid username/password combination.');
