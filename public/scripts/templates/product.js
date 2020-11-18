@@ -1,42 +1,16 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
 import resolvePromise from '../directives/resolvePromise.js';
+import refresh from '../utils/refresh.js'
 import { addProduct, getProducts } from '../services/products.js';
+import productItem from './productItem.js'
 
-let showForm = 'none';
-
-const productItem = (product) => {
-  return html`<div class="prodContainer">
-    <h3>Nombre: ${product.name}</h3>
-    <h3>Descripción:</h3>
-    <p>${product.description}</p>
-    <h3>Fotos:</h3>
-
-    <div class="prod-photo-container">
-      ${product.photos.map(
-        (p) =>
-          p != "" ?
-            html`<img
-            class="prod-photo"
-            src=${p}
-            alt="product photo"
-            width="180"
-            height="180"
-          />`
-          : html``
-        )    
-      }
-      <button class="btn-add" disabled>+ Agregar foto...</button>
-    </div>
-
-    <button class="btn-prod-edit" disabled>Editar Producto</button>
-  </div>`;
-};
+let showCreateProductForm = false;
 
 const product = () => {
   function handlerShowForm() {
-    if (showForm === 'none') showForm = 'block';
-    window.dispatchEvent(new CustomEvent('foo'));
+    showCreateProductForm = !showCreateProductForm;
+    refresh();
   }
 
   const handlerNewProduct = async (event) => {
@@ -97,10 +71,6 @@ const product = () => {
         border-radius: 10px;
       }
 
-      .btn-prod-edit {
-        margin-top: 10px;
-      }
-
       .container-newProduct {
         margin-top: 15vh;
         margin-left: 30%;
@@ -111,7 +81,7 @@ const product = () => {
         border-radius: 2%;
         padding: 15px;
         position: fixed;
-        display: ${showForm};
+        display: ${showCreateProductForm ? 'block' : 'none'};
       }
       form input,
       form textarea {
@@ -143,7 +113,7 @@ const product = () => {
         <input name="f2" type="text" placeholder="URL foto 2" maxlength="50" />
         <input name="f3" type="text" placeholder="URL foto 3" maxlength="50" />
         <button class="btn-enviar" name="guardar" type="submit">Guardar</button>
-        <button class="btn-cerrar" name="cerrar" @click="${handlerShowForm}">Cerrar</button>
+        <button class="btn-cerrar" name="cerrar" type="button" @click="${handlerShowForm}">Cerrar</button>
       </form>
     </div>
 

@@ -13,4 +13,5 @@ button {
   font-size: 1em;
   color: white;
   font-family: 'Roboto', sans-serif;
+  cursor: pointer;
 }
