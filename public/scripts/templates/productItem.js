@@ -3,6 +3,7 @@ import { styleMap } from 'https://unpkg.com/lit-html/directives/style-map?module
 
 import refresh from '../utils/refresh.js';
 import { removeProduct } from '../services/products.js';
+import { navigate } from '../utils/navigation.js';
 
 const productItem = (product) => {
   const actionsStyles = {
@@ -30,6 +31,10 @@ const productItem = (product) => {
     }
   };
 
+  const handleEdit = async () => {
+    navigate(`/edit-product?productId=${product._id}`);
+  };
+
   return html`<div class="prodContainer">
     <h3>Nombre: ${product.name}</h3>
     <h3>Descripción:</h3>
@@ -47,12 +52,10 @@ const productItem = (product) => {
             height="180"
           />`,
       )}
-
-      <button class="btn-add" disabled>+ Agregar foto...</button>
     </div>
 
     <div style=${styleMap(actionsStyles)}>
-      <button disabled>Editar</button>
+      <button @click="${handleEdit}">Editar</button>
       <button style=${styleMap(productionButtonStyles)} @click=${handleDelete}>
         Borrar
       </button>

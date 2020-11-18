@@ -33,4 +33,6 @@ export const get = (url) => fetch(url, 'GET');
 
 export const post = (url, data) => fetch(url, 'POST', data);
 
+export const put = (url, data) => fetch(url, 'PUT', data);
+
 export const del = (url) => fetch(url, 'DELETE');

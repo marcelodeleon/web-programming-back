@@ -6,11 +6,13 @@ import navbar from './templates/navbar.js';
 
 import connections from './templates/connections.js';
 import products from './templates/product.js';
+import editProductForm from './templates/editProductForm.js';
 import profile from './templates/profile.js';
 
 const routes = {
   '/': home,
   '/connections': connections,
+  '/edit-product': editProductForm,
   '/products': products,
   '/profile': profile,
 };
