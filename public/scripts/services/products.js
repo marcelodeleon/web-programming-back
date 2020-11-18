@@ -1,4 +1,4 @@
-import { get, post } from '../utils/api.js';
+import { get, post, del } from '../utils/api.js';
 
 export const addProduct = async (productData) => {
   const { error } = await post('/products', productData);
@@ -17,3 +17,5 @@ export const getProducts = async () => {
 
   return data;
 };
+
+export const removeProduct = async (id) => del(`/products?productId=${id}`);

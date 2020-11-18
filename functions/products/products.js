@@ -1,11 +1,10 @@
-const { create, getAll, del} = require('./methods');
+const { create, getAll, remove } = require('./methods');
 
 const { db } = require('../../libs/middleware');
 
 const productsHandler = async (event) => {
-  
   const { httpMethod: method } = event;
- 
+
   if (method === 'POST') {
     const productData = JSON.parse(event.body);
     return create(productData);
@@ -16,8 +15,8 @@ const productsHandler = async (event) => {
   }
 
   if (method === 'DELETE') {
-    const productId = JSON.parse()
-    return del(productId)
+    const { productId } = event.queryStringParameters;
+    return remove(productId);
   }
 
   return {

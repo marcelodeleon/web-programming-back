@@ -4,5 +4,15 @@
     "jest": true,
     "node": true,
     "browser": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.js", "jest-environment-mongodb.js"] }
+    ],
+    "no-underscore-dangle": [
+      "error",
+      { "allow": ["__MONGO_DB_NAME__", "__MONGO_URI__", "_id"] }
+    ]
   }
 }
