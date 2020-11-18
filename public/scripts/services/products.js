@@ -1,4 +1,4 @@
-import { get } from '../utils/api.js';
+import { get, post } from '../utils/api.js';
 
 export const addProduct = async (productData) => {
   const { error } = await post('/products', productData);
@@ -8,10 +8,12 @@ export const addProduct = async (productData) => {
   }
 };
 
-export const getProduct = async () => {
-  const { error } = await get('/products');
+export const getProducts = async () => {
+  const { data, error } = await get('/products');
 
   if (error) {
     throw new Error('Oops! Something went wrong...');
   }
+
+  return data;
 };

@@ -13,7 +13,6 @@ const routes = {
   '/connections': connections,
   '/products': products,
   '/profile': profile,
-
 };
 
 const authenticatedApp = () => html` ${navbar()} ${router(routes)} `;
