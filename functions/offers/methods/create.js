@@ -9,7 +9,7 @@ const create = async (offerData) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id: 'ok' }),
+    body: JSON.stringify(newOffer._id),
   };
 };
 
