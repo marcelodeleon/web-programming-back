@@ -1,52 +1,70 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
-import { addProduct, getProduct } from '../services/products.js'
+import resolvePromise from '../directives/resolvePromise.js';
+import { addProduct, getProducts } from '../services/products.js';
 
-let showForm = "none";
-let myProducts = [];
-let fetchingProducts = true;
+let showForm = 'none';
 
+const productItem = (product) => {
+  return html`<div class="prodContainer">
+    <h3>Nombre: ${product.name}</h3>
+    <h3>Descripción:</h3>
+    <p>${product.description}</p>
+    <h3>Fotos:</h3>
 
-try {
-  myProducts = await getProduct();
-} catch (err) {
-  alert(err.message)
-} finally {
-  fetchingProducts = false;
-  window.dispatchEvent(new CustomEvent("foo"));
-  console.log("My Products",myProducts);
-}
-       
+    <div class="prod-photo-container">
+      ${product.photos.map(
+        (p) =>
+          html`<img
+            class="prod-photo"
+            src=${p}
+            alt="product photo"
+            width="180"
+            height="180"
+          />`,
+      )}
 
+      <button class="btn-add" disabled>+ Agregar foto...</button>
+    </div>
+
+    <button class="btn-prod-edit" disabled>Editar Producto</button>
+  </div>`;
+};
 
 const product = () => {
-  
-
-  //Objetc for testing
-  var objProduct = new Object();
-  objProduct.name = "Guitarra Criolla Fender!";
-  objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
-  objProduct.description = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
-  
   function handlerShowForm() {
-    showForm == "none" ? showForm = "block" : showForm = "none"; 
-    window.dispatchEvent(new CustomEvent("foo"));
+    if (showForm === 'none') showForm = 'block';
+    window.dispatchEvent(new CustomEvent('foo'));
   }
 
   const handlerNewProduct = async (event) => {
     event.preventDefault();
     const name = event.target.name.value;
     const description = event.target.description.value;
-    const photos = [event.target.f1.value, event.target.f2.value, event.target.f3.value]
-    
+    const photos = [
+      event.target.f1.value,
+      event.target.f2.value,
+      event.target.f3.value,
+    ];
+
     try {
-      await addProduct({name, description, photos});
+      await addProduct({ name, description, photos });
     } catch (err) {
-      console.log(err);
+      alert(err.message);
     }
-    handlerShowForm()          
+    handlerShowForm();
   };
-    
+
+  const fetchProducts = async () => {
+    const { data: products } = await getProducts();
+
+    if (products.length === 0) {
+      return html`<p>No tienes productos!</p>`;
+    }
+
+    return html`${products.map(productItem)}`;
+  };
+
   return html`
     <style>
       .prodsContainer {
@@ -127,36 +145,9 @@ const product = () => {
       </form>
     </div>
 
-
     <div class="prodsContainer">
       <h1 class="prodTittle">Tus Productos:</h1>
-
-      ${myProducts.map(mp =>
-        html`      
-          <div class="prodContainer">
-            <h3>Nombre: ${mp.name}</h3>
-            <h3>Descripción:</h3>
-            <p>${mp.description}</p>
-            <h3>Fotos:</h3>
-
-            <div class="prod-photo-container">
-              ${mp.photos.map(p => 
-                html`<img
-                  class="prod-photo"
-                  src= ${p}
-                  alt="product photo"
-                  width="180"
-                  height="180"
-                />`
-              )}          
-
-              <button class="btn-add" disabled>+ Agregar foto...</button>
-            </div>
-
-            <button class="btn-prod-edit" disabled>Editar Producto</button>
-          </div>
-          `)}
-
+      ${resolvePromise(fetchProducts())}
       <button class="" @click="${handlerShowForm}">Agregar Nuevo Producto</button>
     </div>
   `;

@@ -6,7 +6,9 @@ const getAll = async () => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify((await Product.find({})))
+    body: JSON.stringify({
+      data: await Product.find({}),
+    }),
   };
 };
 
