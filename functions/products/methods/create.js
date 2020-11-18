@@ -5,7 +5,7 @@ const create = async (productData) => {
   newProduct.save();
 
   return {
-    statusCode: 200,
+    statusCode: 201,
     headers: {
       'Content-Type': 'application/json',
     },

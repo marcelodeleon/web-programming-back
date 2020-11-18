@@ -1,40 +1,52 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
-import { addProduct } from '../services/products.js'
+import { addProduct, getProduct } from '../services/products.js'
 
 let showForm = "none";
+let myProducts = [];
+let fetchingProducts = true;
+
+
+try {
+  myProducts = await getProduct();
+} catch (err) {
+  alert(err.message)
+} finally {
+  fetchingProducts = false;
+  window.dispatchEvent(new CustomEvent("foo"));
+  console.log("My Products",myProducts);
+}
+       
+
+
 const product = () => {
   
 
-    //Objetc for testing
-    var objProduct = new Object();
-    objProduct.name = "Guitarra Criolla Fender!";
-    objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
-    objProduct.description = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
+  //Objetc for testing
+  var objProduct = new Object();
+  objProduct.name = "Guitarra Criolla Fender!";
+  objProduct.photos = ["https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg"]
+  objProduct.description = "Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.";
   
-    var myProducts = [objProduct]
+  function handlerShowForm() {
+    showForm == "none" ? showForm = "block" : showForm = "none"; 
+    window.dispatchEvent(new CustomEvent("foo"));
+  }
 
-    function handlerShowForm() {
-      showForm == "none" ? showForm = "block" : showForm = "none"; 
-      window.dispatchEvent(new CustomEvent("foo"));
+  const handlerNewProduct = async (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const description = event.target.description.value;
+    const photos = [event.target.f1.value, event.target.f2.value, event.target.f3.value]
+    
+    try {
+      await addProduct({name, description, photos});
+    } catch (err) {
+      console.log(err);
     }
-
-    const handlerNewProduct = async (event) => {
-      event.preventDefault();
-  
-      const name = event.target.name.value;
-      const description = event.target.description.value;
-      const photos = [event.target.f1.value, event.target.f2.value, event.target.f3.value]
-      
-      try {
-        await addProduct({name, description, photos});
-      } catch (err) {
-        console.log(err);
-      }
-      handlerShowForm()
-           
-    };
-
+    handlerShowForm()          
+  };
+    
   return html`
     <style>
       .prodsContainer {
