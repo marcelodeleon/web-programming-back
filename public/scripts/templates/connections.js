@@ -1,32 +1,52 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
+import resolvePromise from '../directives/resolvePromise.js';
+import { getOffers } from '../services/offers.js';
+
+const offerItem = (offer) => {
+  return html` 
+      <div class="connection">
+        <p>Por tu: <strong>${offer.wantedProductname}</strong></p>
+        <p>Ofrecen: <strong>${offer.offeredProductname}</strong></p>
+        <p class="connProdDescription">" ${offer.offeredProductDescription} "</p>
+        <p>Propietario: <strong>${offer.contactInformation.fullName}</strong></p>
+        <p>Teléfono: <strong>${offer.contactInformation.phone}</strong></p>
+        <p>Email: <strong>${offer.contactInformation.email}</strong></p>
+
+        ${offer.offeredProductPhotos.length > 0 ?
+          offer.offeredProductPhotos.map(
+            (photoURL) => 
+              html`<img
+                class="connProdPhoto"
+                src="${photoURL}"
+                alt="product photo"
+                width="175"
+                height="175"
+                align="center"
+              />` 
+            ): html`<p class="pText">Este producto no tiene fotos disponibles. </p>`}
+      </div>`
+  
+};
+
 const connections = () => {
-  // Objetc for testing
-  const objProduct = {};
-  objProduct.name = 'Guitarra Criolla Fender!';
-  objProduct.photos = [
-    'https://media.fanaticguitars.com/2016/05/alhambra-4p-1.jpg',
-    'https://upload.wikimedia.org/wikipedia/commons/e/e8/Classical_Guitar_two_views.jpg',
-  ];
-  objProduct.descrption =
-    'Excelente sonido. Afina bien y está en muy buen estado. Solo tiene un detalle que se aprecia en la última foto, pero no afecta ni el sonido ni el funcionamiento de la misma.';
+  const fetchOffers = async () => {
+    const { data: offers } = await getOffers();
 
-  const objPerson = {};
-  objPerson.name = 'Oscar Lopez';
-  objPerson.phone = '098 654 445';
-  objPerson.email = 'oscarlopez45@gmail.com';
+    if (offers.length === 0) {
+      return html`<p>Aun no tienes ofertas!</p>`;
+    }
+    console.log(offers);
+    return html`${offers.map(offerItem)}`;
+  };
 
-  const myconnections = [
-    [objProduct, objPerson],
-    [objProduct, objPerson],
-  ];
 
   return html`
     <style>
       .connTittle {
         margin-left: 15px;
       }
-
+      .pText {text-align: center}
       .connContainer {
         text-align: left;
       }
@@ -40,34 +60,14 @@ const connections = () => {
         border-radius: 10px;
         margin: 15px;
         padding: 15px;
-        height: 260px;
+        height: auto;
         background-color: rgb(28, 141, 179);
       }
     </style>
 
     <h1 class="connTittle">Tus conexiones:</h1>
     <div class="connContainer">
-      ${myconnections.map(
-        () =>
-          html` <div class="connection">
-            <p>Ofrecen: <strong>${objProduct.name}</strong></p>
-            <p>Por tu: <strong>${objProduct.name}</strong></p>
-
-            <img
-              class="connProdPhoto"
-              src="${objProduct.photos[0]}"
-              alt="product photo"
-              width="175"
-              height="175"
-              align="right"
-            />
-
-            <p class="connProdDescription">" ${objProduct.descrption} "</p>
-            <p>Propietario: <strong>${objPerson.name}</strong></p>
-            <p>Teléfono: <strong>${objPerson.phone}</strong></p>
-            <p>Email: <strong>${objPerson.email}</strong></p>
-          </div>`,
-      )}
+    ${resolvePromise(fetchOffers())}
     </div>
   `;
 };
