@@ -9,5 +9,8 @@ export const setSessionToken = (token) => {
 };
 
 export const removeSessionToken = () => {
+  
   window.localStorage.removeItem(tokenStorageKey);
+  console.log("Token deleted");
+  
 };

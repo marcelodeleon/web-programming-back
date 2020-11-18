@@ -1,7 +1,7 @@
 import { html } from 'https://unpkg.com/lit-html?module';
-
-import { addProduct } from '../services/products.js'
-
+import refresh from '../utils/refresh.js';
+import { addProduct } from '../services/products.js';
+let loading = false;
 let showForm = "none";
 const product = () => {
   
@@ -16,12 +16,14 @@ const product = () => {
 
     function handlerShowForm() {
       showForm == "none" ? showForm = "block" : showForm = "none"; 
-      window.dispatchEvent(new CustomEvent("foo"));
+      refresh();
     }
 
     const handlerNewProduct = async (event) => {
       event.preventDefault();
-  
+
+      loading = true;
+      refresh();
       const name = event.target.name.value;
       const description = event.target.description.value;
       const photos = [event.target.f1.value, event.target.f2.value, event.target.f3.value]
@@ -31,14 +33,15 @@ const product = () => {
       } catch (err) {
         console.log(err);
       }
-      handlerShowForm()
-           
+      loading = false;
+      refresh();
+      handlerShowForm()       
     };
 
   return html`
     <style>
       .prodsContainer {
-        margin: 10px;
+        margin: 15px;
       }
 
       .prod-photo-container {
@@ -66,7 +69,7 @@ const product = () => {
       }
 
       .btn-prod-edit {
-        margin-top: 10px;
+        margin-top: 15px;
       }
 
       .container-newProduct {
@@ -110,7 +113,9 @@ const product = () => {
         <input name="f1" type="text" placeholder="URL foto 1" maxlength="50" />
         <input name="f2" type="text" placeholder="URL foto 2" maxlength="50" />
         <input name="f3" type="text" placeholder="URL foto 3" maxlength="50" />
-        <button class="btn-enviar" name="guardar" type="submit">Guardar</button>
+        <button class="btn-enviar" name="guardar" type="submit">
+        ${loading ? 'Loading...' : 'Guardar'}
+        </button>
         <button class="btn-cerrar" name="cerrar" @click="${handlerShowForm}">Cerrar</button>
       </form>
     </div>
@@ -145,7 +150,7 @@ const product = () => {
           </div>
           `)}
 
-      <button class="" @click="${handlerShowForm}">Agregar Nuevo Producto</button>
+      <button class="prodsContainer" @click="${handlerShowForm}">Agregar Nuevo Producto</button>
     </div>
   `;
 };

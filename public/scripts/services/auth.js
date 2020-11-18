@@ -1,5 +1,6 @@
 import { post } from '../utils/api.js';
 import { navigate } from '../utils/navigation.js';
+import refresh from '../utils/refresh.js';
 import { removeSessionToken, setSessionToken } from '../utils/session.js';
 
 export const logIn = async (username, password) => {
@@ -23,6 +24,6 @@ export const logIn = async (username, password) => {
 
 export const logOut = () => {
   removeSessionToken();
-
-  navigate('/');
+  refresh();
+  //navigate('/');
 };

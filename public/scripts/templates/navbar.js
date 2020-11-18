@@ -21,7 +21,7 @@ const navbar = () => {
   }
 
   const navbarItems = [
-    { path: '#', label: 'Log Out', onClick: logOut },
+    { path: '/', label: 'Log Out', onClick: logOut },
     { path: '/profile', label: 'Perfil' },
     { path: '/products', label: 'Producto' },
     { path: '/connections', label: 'Conexiones' },
