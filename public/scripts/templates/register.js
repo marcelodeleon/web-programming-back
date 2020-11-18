@@ -106,14 +106,6 @@ const registerUser = () => {
           required
           autofocus
         />
-        <input
-          name="confcontraseña"
-          type="password"
-          placeholder="Confirmar Contraseña"
-          maxlength="30"
-          required
-          autofocus
-        />
         Opcional:
         <input
           name="telefono"

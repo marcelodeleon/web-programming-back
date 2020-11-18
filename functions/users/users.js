@@ -16,6 +16,6 @@ const usersHandler = async (event) => {
 };
 
 const options = {
-  unauthenticatedRoutes: [{ method: 'GET', path: '/api/users' }],
+  unauthenticatedRoutes: [{ method: 'POST', path: '/api/users' }],
 };
 exports.handler = db(authentication(options)(usersHandler));
