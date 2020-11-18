@@ -25,9 +25,12 @@ const fetch = async (url, method, data) => {
     return { error: { status: response.status } };
   }
 
-  return { data: await response.json() };
+  if (response.status !== 204) return { data: await response.json() };
+  return response.status;
 };
 
 export const get = (url) => fetch(url, 'GET');
 
 export const post = (url, data) => fetch(url, 'POST', data);
+
+export const del = (url) => fetch(url, 'DELETE');
