@@ -1,11 +1,11 @@
-import { html } from 'https://unpkg.com/lit-html?module';
+import { html, nothing } from 'https://unpkg.com/lit-html?module';
 
 import { logIn } from '../services/auth.js';
+import refresh from '../utils/refresh.js';
 
-
+let error = null;
 
 const login = () => {
-
   const loginHandler = async (event) => {
     event.preventDefault();
 
@@ -15,7 +15,8 @@ const login = () => {
     try {
       await logIn(username, password);
     } catch (err) {
-      console.log("err");
+      error = 'Usuario o contraseña no válidos!';
+      refresh();
     }
   };
 
@@ -52,19 +53,22 @@ const login = () => {
       .login-container h5 {
         float: left;
       }
-
     </style>
     <div class="pageContainer">
       <form class="login-container" @submit=${loginHandler}>
         <input type="text" name="username" placeholder="Usuario" />
         <br />
-        <input type="password" name="password" placeholder="Contrase&ntilde;a" />
+        <input
+          type="password"
+          name="password"
+          placeholder="Contrase&ntilde;a"
+        />
         <br />
+        ${error ? html`<p class="error">${error}</p>` : nothing}
         <button type="submit">Ingresar</button>
         <br />
         <h5>
-          ¿No tienes cuenta? <a href="/register" target="_self">Regístrate!</a> 
-      
+          ¿No tienes cuenta? <a href="/register" target="_self">Regístrate!</a>
         </h5>
       </form>
     </div>
