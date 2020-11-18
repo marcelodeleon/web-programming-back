@@ -1,5 +1,4 @@
-const { create } = require('./methods');
-const { getAll } = require('./methods');
+const { create, getAll, del} = require('./methods');
 
 const { db } = require('../../libs/middleware');
 
@@ -14,6 +13,11 @@ const productsHandler = async (event) => {
 
   if (method === 'GET') {
     return getAll();
+  }
+
+  if (method === 'DELETE') {
+    const productId = JSON.parse()
+    return del(productId)
   }
 
   return {
