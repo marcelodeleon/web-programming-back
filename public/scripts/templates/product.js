@@ -15,15 +15,17 @@ const productItem = (product) => {
     <div class="prod-photo-container">
       ${product.photos.map(
         (p) =>
-          html`<img
+          p != "" ?
+            html`<img
             class="prod-photo"
             src=${p}
             alt="product photo"
             width="180"
             height="180"
-          />`,
-      )}
-
+          />`
+          : html``
+        )    
+      }
       <button class="btn-add" disabled>+ Agregar foto...</button>
     </div>
 
