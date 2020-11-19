@@ -1,6 +1,6 @@
 const { modify, create, getAll, remove, getById } = require('./methods');
 
-const { db } = require('../../libs/middleware');
+const { db, authentication } = require('../../libs/middleware');
 
 const productsHandler = async (event) => {
   const { httpMethod: method } = event;
@@ -31,4 +31,4 @@ const productsHandler = async (event) => {
   };
 };
 
-exports.handler = db(productsHandler);
+exports.handler = db(authentication()(productsHandler));

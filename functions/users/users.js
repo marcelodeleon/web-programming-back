@@ -1,6 +1,5 @@
 const { register } = require('./methods');
-const { authentication } = require('../../libs/middleware');
-const { db } = require('../../libs/middleware');
+const { db, authentication } = require('../../libs/middleware');
 
 const usersHandler = async (event) => {
   const { httpMethod: method } = event;
