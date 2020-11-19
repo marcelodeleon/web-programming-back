@@ -24,10 +24,9 @@ const bypassAuth = (unauthenticatedRoutes, event) => {
   );
 };
 
-const authentication = ({ unauthenticatedRoutes } = {}) => (handler) => async (
-  event,
-  context,
-) => {
+const authentication = (
+  { unauthenticatedRoutes } = { unauthenticatedRoutes: [] },
+) => (handler) => async (event, context) => {
   if (bypassAuth(unauthenticatedRoutes, event)) {
     return handler(event, context, null);
   }
