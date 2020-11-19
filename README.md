@@ -113,7 +113,7 @@ Al utilizar Delete, algunos resultados posibles:
 | DELETE /products/\$productId              | Elimina el producto con Id "productId"                |
 | GET /products                             | Obtiene todos los productos                           |
 | POST /offers/\$productId/                 | Asocia una oferta a un producto                       |
-| GET /offers                               | Obtiene todos los likes del usuario autenticado       |
+| GET /offers                               | Obtiene todos las ofertas del usuario autenticado     |
 
 
 # Consideraciones para próximas versiones
