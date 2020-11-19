@@ -98,8 +98,15 @@ const registerUser = () => {
           placeholder="Correo electr&oacute;nico"
           required
         />
-        type="password" placeholder="Contraseña" maxlength="30" required
-        autofocus /> Opcional:
+        <input
+          name="password"
+          type="password"
+          placeholder="Contraseña"
+          maxlength="30"
+          required
+          autofocus
+        />
+        Opcional:
         <input
           name="telefono"
           type="text"
