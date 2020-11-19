@@ -16,7 +16,7 @@ const getById = async (id) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ data: { user: clientsafeUser } }),
+    body: JSON.stringify({ data: { ...clientsafeUser } }),
   };
 };
 

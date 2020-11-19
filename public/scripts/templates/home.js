@@ -31,52 +31,53 @@ const home = () => {
     refresh();
   }
 
-  const handlerDoOffer = async (event) => {
-    loading = true;
-    refresh();
-    event.preventDefault();
-
-    /* To get the selected product in dropdown */
-    const combo = document.getElementById('producto');
-    console.log({ combo });
-
-    const selected = combo.options[combo.selectedIndex].text;
-
-    const current = productList[currentProduct];
-    /* Data to build the offer */
-
-    const objOffer = {
-      offeredProductname: selected,
-      wantedProductname: current.name,
-      offeredProductDescription: current.description,
-      offeredProductPhotos: current.photos,
-      contactInformation: {
-        email: currentUser.email,
-        fullName: currentUser.fullName,
-        phone: currentUser.phone,
-      },
-    };
-
-    try {
-      await addOffer(objOffer);
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      loading = false;
-      refresh();
-    }
-  };
-
   const fetchProducts = async () => {
     const { data: products } = await getProducts();
 
-    const { data: user } = await getCurrentUser();
-    currentUser = user;
+    const handlerDoOffer = async (event) => {
+      loading = true;
+      refresh();
+      event.preventDefault();
 
-    productList = products.filter((p) => p.ownerId !== currentUser._id);
+      /* To get the selected product in dropdown */
+      const combo = document.getElementById('producto');
+
+      const selected = combo.options[combo.selectedIndex].text;
+
+      const current = productList[currentProduct];
+      /* Data to build the offer */
+
+      const objOffer = {
+        offeredProductname: selected,
+        wantedProductname: current.name,
+        offeredProductDescription: current.description,
+        offeredProductPhotos: current.photos,
+        contactInformation: {
+          email: currentUser.email,
+          fullName: currentUser.fullName,
+          phone: currentUser.phone,
+        },
+      };
+
+      try {
+        await addOffer(objOffer);
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        loading = false;
+        refresh();
+      }
+    };
+
+    const { data: user } = await getCurrentUser();
+    currentUser = { ...user };
+
+    productList = products.filter((p) => {
+      return p.ownerId.toString() !== currentUser._id.toString();
+    });
 
     lismyProducts = products
-      .filter((p) => p.ownerId === currentUser._id)
+      .filter((p) => p.ownerId.toString() === currentUser._id.toString())
       .map((p) => p.name);
 
     if (productList.length === 0) {
@@ -113,7 +114,7 @@ const home = () => {
         <div class="myProducts_container">
           <p>Elige cuál de tus productos deseas ofrecer a cambio:</p>
           <select name="current" id="producto">
-            ${lismyProducts.map((p) => html`<option value="p">${p}</option>`)}
+            ${lismyProducts.map((p) => html`<option value=${p}>${p}</option>`)}
           </select>
           <br />
         </div>
