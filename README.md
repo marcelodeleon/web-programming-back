@@ -1,4 +1,4 @@
-# Propuesta de Proyecto
+# Proyecto
 
 ## Trueque
 
@@ -8,7 +8,7 @@ Grupo 5:
 - **Fiorella Escobar**
 - **Nicolás Machado**
 
-Para acceder a la app (https://github.com/your/project/contributors)
+Para acceder a la app (https://trueque.netlify.app/)
 
 # Introducción
 
@@ -33,17 +33,16 @@ Como se manejan servicios de autenticación y credenciales, también se implemen
 
 En la primera versión funcional de la plataforma se habilitará un solo producto u objeto por perfil. Para futuras versiones se maneja la posibilidad de ampliar este rango. El usuario deberá cargar distintas fotos del objeto, un título, una descripción y detalles de lo que desea intercambiar. Esta información será visible para el resto de los usuarios que utilicen la web.
 
-## Likear/Rechazar
+## Ofertar/Descartar
 
-Una vez que el usuario tiene su perfil y su producto cargado podrá explorar las distintas propuestas que existen en su cercanía( A nivel nacional). La plataforma le mostrará uno a uno los productos a disposición y se proyectarán dos botones:
+Una vez que el usuario tiene su perfil cargado podrá explorar las distintas propuestas que existen en la plataforma. En la pestaña "Explorar" se mostrará uno a uno los productos a disposición y se proyectarán dos botones:
 
-- **Likear:** Me interesa el producto y quiero contactarme con el dueño para un posible trueque!
-- **Rechazar:** El producto no es de mi interés y no deseo contactarme con su dueño.
+- **Ofertar:** Me interesa el producto, quiero ofertar y comunicarme con el dueño para un posible trueque!
+- **Siguiente:** El producto no es de mi interés, no deseo contactarme con su dueño y paso al siguiente.
 
-## Conectar(Matchear)
+## Conexiones
 
-El match o conexión se da únicamente cuando dos usuarios están interesados en el producto del otro. Es decir cuando Usuario1 likea a el producto de Usuario2 y Usuario2 likea el producto de Usuario1.  
-Estas conexiones entre los productos son analizados en el backend de la plataforma y en caso de que exista un match, ambos usuarios involucrados podrán acceder a la información de contacto de la otra parte. Si uno (o ambos) rechaza el trueque la conexión no se genera y ninguno de los dos es alertado.
+En esta pesataña es dónde el usuario puede ver todas las ofertas que ha recibido sobre sus productos e información sobre esta.
 
 # Arquitectura
 
@@ -62,6 +61,7 @@ Para llevar a cabo la construcción de este proyecto se planea utilizar mayormen
 - **Html**
 - **Css**
 - **Javascript**
+- **Lit-Pages**
 
 ## Backend
 
@@ -69,6 +69,12 @@ Para llevar a cabo la construcción de este proyecto se planea utilizar mayormen
 - **MongoDB**
 - **JWToken**
 - **Librería de encriptación (Bcrypt)**
+
+## Deploy
+
+- **Netlify**
+- **Netlify functions**
+
 
 # Rest
 
@@ -90,6 +96,7 @@ Al utilizar Delete, algunos resultados posibles:
 
 - **200** OK
 - **404** Not found
+- **401** Unathorized
 - **500** Server error
 
 # Endpoints
@@ -105,12 +112,13 @@ Al utilizar Delete, algunos resultados posibles:
 | PUT /products/\$productId                 | Edita un producto                                     |
 | DELETE /products/\$productId              | Elimina el producto con Id "productId"                |
 | GET /products                             | Obtiene todos los productos                           |
-| POST /products/\$productId/likes          | Crea un like                                          |
-| DELETE /products/$productId/likes/$likeId | Elimina un like                                       |
-| GET /likes                                | Obtiene todos los likes del usuario autenticado       |
-| GET/matches                               | Obtiene todos los matches para el usuario autenticado |
+| POST /offers/\$productId/                 | Asocia una oferta a un producto                       |
+| GET /offers                               | Obtiene todos los likes del usuario autenticado       |
+
 
 # Consideraciones para próximas versiones
+
+Algunas implementaciones que nos gustaría agregar en un futuro.
 
 ## Restablecer contraseña
 
@@ -125,3 +133,8 @@ En el perfil de cada usuario se visualizará la puntuación proporcionada por lo
 ## Eliminar usuario
 
 Poder dar de baja un usuario ya creado porque no utilizará más la aplicación.
+
+## Complejidad en la oferta
+
+Permitirle al usuario crear una oferta más elaborada, pudiendo adjuntar un mensaje o inclusive varios productos como parte de la propuesta.
+
