@@ -73,6 +73,7 @@ const authentication = (
 
   const { sub: userId } = decoded;
   const user = await User.findById(userId);
+  context.user = user;
 
   if (!user) {
     return {

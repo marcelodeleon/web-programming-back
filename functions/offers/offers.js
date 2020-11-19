@@ -8,6 +8,7 @@ const offerHandler = async (event) => {
 
   if (method === 'POST') {
     const offerData = JSON.parse(event.body);
+    console.log({ offerData });
     return create(offerData);
   }
 
