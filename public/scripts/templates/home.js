@@ -11,6 +11,7 @@ let currentProduct = 0;
 let productList = [];
 let lismyProducts = [];
 let currentUser;
+let selectedProduct;
 
 const home = () => {
   function handlerNextProduct() {
@@ -39,16 +40,11 @@ const home = () => {
       refresh();
       event.preventDefault();
 
-      /* To get the selected product in dropdown */
-      const combo = document.getElementById('producto');
-
-      const selected = combo.options[combo.selectedIndex].text;
-
       const current = productList[currentProduct];
       /* Data to build the offer */
 
       const objOffer = {
-        offeredProductname: selected,
+        offeredProductname: selectedProduct,
         wantedProductname: current.name,
         offeredProductDescription: current.description,
         offeredProductPhotos: current.photos,
@@ -85,6 +81,16 @@ const home = () => {
     }
     const current = productList[currentProduct];
 
+    // eslint-disable-next-line
+    selectedProduct = lismyProducts[0];
+
+    const changeItemHandler = (evt) => {
+      const { target: combo } = evt;
+
+      const selected = combo.options[combo.selectedIndex].text;
+      selectedProduct = selected;
+    };
+
     return html`
       <div class="left_container">
         <button class="arrow" type="button" @click="${handlerPreviusPhoto}">
@@ -113,7 +119,7 @@ const home = () => {
 
         <div class="myProducts_container">
           <p>Elige cuál de tus productos deseas ofrecer a cambio:</p>
-          <select name="current" id="producto">
+          <select name="current" id="selectedProd" @change=${changeItemHandler}>
             ${lismyProducts.map((p) => html`<option value=${p}>${p}</option>`)}
           </select>
           <br />
