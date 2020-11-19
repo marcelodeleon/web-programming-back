@@ -2,12 +2,12 @@ const { modify, create, getAll, remove, getById } = require('./methods');
 
 const { db, authentication } = require('../../libs/middleware');
 
-const productsHandler = async (event) => {
+const productsHandler = async (event, context) => {
   const { httpMethod: method } = event;
 
   if (method === 'POST') {
     const productData = JSON.parse(event.body);
-    return create(productData);
+    return create({ ownerId: context.user._id, ...productData });
   }
 
   if (method === 'GET') {

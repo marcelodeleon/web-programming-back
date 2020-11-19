@@ -42,15 +42,16 @@ const productItem = (product) => {
     <h3>Fotos:</h3>
 
     <div class="prod-photo-container">
-      ${product.photos.map(
-        (p) =>
-          html`<img
-            class="prod-photo"
-            src=${p}
-            alt="product photo"
-            width="180"
-            height="180"
-          />`,
+      ${product.photos.map((p) =>
+        p !== ''
+          ? html`<img
+              class="prod-photo"
+              src=${p}
+              alt="product photo"
+              width="180"
+              height="180"
+            />`
+          : html``,
       )}
     </div>
 

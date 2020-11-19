@@ -1,8 +1,14 @@
-const { register } = require('./methods');
+const { register, getById } = require('./methods');
 const { db, authentication } = require('../../libs/middleware');
 
-const usersHandler = async (event) => {
+const usersHandler = async (event, context) => {
   const { httpMethod: method } = event;
+
+  if (method === 'GET') {
+    const { user } = context;
+    const currentUserId = user._id;
+    return getById(currentUserId);
+  }
 
   if (method === 'POST') {
     const userData = JSON.parse(event.body);
