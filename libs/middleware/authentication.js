@@ -19,14 +19,18 @@ const verifyToken = (token) => {
 const bypassAuth = (unauthenticatedRoutes, event) => {
   const { httpMethod: currentMethod, path: currentPath } = event;
 
+  console.log({ unauthenticatedRoutes });
+  if (!unauthenticatedRoutes) return true;
+
   return unauthenticatedRoutes.some(
     ({ method, path }) => currentMethod === method && currentPath === path,
   );
 };
 
-const authentication = (
-  { unauthenticatedRoutes } = { unauthenticatedRoutes: [] },
-) => (handler) => async (event, context) => {
+const authentication = ({ unauthenticatedRoutes } = {}) => (handler) => async (
+  event,
+  context,
+) => {
   if (bypassAuth(unauthenticatedRoutes, event)) {
     return handler(event, context, null);
   }
